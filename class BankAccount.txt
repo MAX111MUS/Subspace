@@ -1,0 +1,64 @@
+class BankAccount:
+    def __init__(self, account_number, balance):
+        self.account_number = account_number
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+        else:
+            print("Insufficient funds!")
+
+    def get_balance(self):
+        return self.balance
+
+class Bank:
+    def __init__(self):
+        self.accounts = {}
+
+    def create_account(self, account_number, initial_balance):
+        if account_number in self.accounts:
+            print("Account number already exists!")
+        else:
+            new_account = BankAccount(account_number, initial_balance)
+            self.accounts[account_number] = new_account
+
+    def get_account_balance(self, account_number):
+        if account_number in self.accounts:
+            account = self.accounts[account_number]
+            return account.get_balance()
+        else:
+            print("Account not found!")
+
+    def deposit_to_account(self, account_number, amount):
+        if account_number in self.accounts:
+            account = self.accounts[account_number]
+            account.deposit(amount)
+        else:
+            print("Account not found!")
+
+    def withdraw_from_account(self, account_number, amount):
+        if account_number in self.accounts:
+            account = self.accounts[account_number]
+            account.withdraw(amount)
+        else:
+            print("Account not found!")
+
+
+# Usage example:
+bank = Bank()
+
+bank.create_account("12345", 1000)
+bank.create_account("67890", 500)
+
+bank.deposit_to_account("12345", 200)
+bank.withdraw_from_account("67890", 100)
+
+balance1 = bank.get_account_balance("12345")
+balance2 = bank.get_account_balance("67890")
+
+print("Account 12345 balance:", balance1)
+print("Account 67890 balance:", balance2)
